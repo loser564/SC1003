@@ -1,0 +1,173 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+#define MAX 5
+
+
+typedef struct  {
+    int roomID;
+    int status;
+    char customerName[20];
+
+}hotelRecord;
+
+int findCustomer(hotelRecord *guests,  char target);
+void removeRoom(hotelRecord *guests, int size);
+int assignRoom(hotelRecord *guests, int size);
+void listOccupiedRooms(hotelRecord *guests, int size);
+
+
+int main() {
+    int choice,i, size = 0;
+    char result,target;
+    hotelRecord guests[MAX];
+
+    printf("NTU HOTEL ROOM RESERVATION PROGRAM: \n");
+    printf("1: listOccupiedRooms()\n");
+    printf("2: assignRoom()\n");
+    printf("3: removeRoom()\n");
+    printf("4: findCustomer()\n");
+    printf("5: quit()\n");
+
+    do {
+      printf("Enter your choice: \n");
+      scanf("%d", &choice);
+      switch (choice) {
+        case 1:
+            printf("listOccupiedRooms(): \n");
+            listOccupiedRooms(guests, size);
+            break;
+        case 2:
+            printf("assignRoom(): \n");
+            size = assignRoom(guests, size);
+            break;
+        case 3:
+            printf("removeRoom(): \n");
+            removeRoom(guests, size);
+            break;
+        case 4:
+            printf("findCustomer(): \n");
+            printf("Enter customer name: \n");
+            scanf("%s", target);
+            result = findCustomer(guests, target);
+            if (result == -1){
+                printf("The target customer name is not found \n");
+
+            }
+            else{
+                printf("%d \n", guests[i].roomID);
+                printf("%s \n", guests[i].customerName);
+            }
+
+            
+            break;
+
+      }
+   } while (choice < 5);
+   return 0;
+}
+
+void listOccupiedRooms(hotelRecord *guests, int size){
+    int i;
+    if (size>0){
+        for (i=0; i<size; i++){
+            if(guests[i].status == 1){
+                printf("roomID: %d \n", guests[i].roomID);
+                printf("customerName: %s \n", guests[i].customerName);
+            }
+        
+        }
+    }
+    else{
+        printf("The hotel is empty \n");
+    }
+
+
+
+}
+
+int assignRoom(hotelRecord *guests, int size){
+    int ID,i, truth =1 ;
+    char personName[20], *p, dummy;
+    while (truth == 1){
+        printf("Enter a roomID between 1 and 5: \n");
+        scanf("%d", &ID);
+        fgets(dummy,20,stdin);
+        if (ID > 0 && ID < 6){
+            //truth = 0;
+            printf("Enter customer name: \n");
+            scanf("\n");
+            fgets(personName, 20, stdin);
+            if (p = strchr(personName, '\n')){
+                *p = '\0';
+            
+                break;
+            }
+        }
+
+        else if (guests[ID].status == 1){
+            printf("Occupied! Enter another roomID \n");
+            
+        }
+
+        else{
+            continue;
+        }
+
+    strcpy(guests[ID].customerName, personName);
+    guests[ID].status = 1;
+    ID = guests[ID].roomID;
+    size ++;
+    printf("The room has been assigned successfully \n");
+    return size;
+   
+    }
+        
+}
+
+void removeRoom(hotelRecord *guests, int size){
+    int i, ID;
+    while (1){
+        printf("Enter a roomID between 1 and 5: \n");
+        scanf("%d", &ID);
+        if (ID > 0 || ID <6){
+            if (guests[ID].status == 0){
+                printf("Empty! Enter another roomID for removal \n");
+                break;
+            }
+
+            else{
+                guests[ID].status = 0;
+                strcpy(guests[i].customerName, "");
+                printf("Removal is succesful \n");
+                size --;
+                break;
+
+            }
+        }
+        else{
+            printf("Enter a roomID between 1 and 5 \n");
+            continue;
+        }
+
+    }
+    }
+
+
+int findCustomer(hotelRecord *guests, char target){
+    char name[20], *p ;
+    int i;
+    printf("Enter customer's name: ");
+    fgets(name, 20, stdin);
+    if (p = strchr(name, '\n')){
+        *p = '\0';
+    }
+
+for (i=0;i<5;i++){
+    if(strcasecmp(guests[i].customerName, target)==0){
+        return i;
+    }
+}
+return -1;
+}
+

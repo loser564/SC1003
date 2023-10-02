@@ -1,0 +1,40 @@
+from ast import Break
+from this import d
+
+
+grades = {
+    ('FS1', 1) : 45,
+    ('FS1', 2) : 75,
+    ('FS1', 3) : 25,
+    ('FS1', 4) : 65,
+
+    ('FS2', 1) : 75,
+    ('FS2', 2) : 40,
+    ('FS2', 3) : 70,
+    ('FS2', 4) : 80 
+}
+
+
+
+
+def inputRecord(database, group , id):
+    return(grades[group, id])
+    
+   
+  
+while True:
+    group = input("Input students group(input 'stop' to stop):")
+    if group == "stop":
+        break
+    else: 
+        id = int(input("Input student's ID:"))
+        print(inputRecord(grades,group, id))
+
+
+
+
+
+
+
+
+
